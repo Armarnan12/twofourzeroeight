@@ -192,5 +192,107 @@ namespace twozerofoureight
             }
             HandleChanges(changed);
         }
-    }
+		public int GetScore()
+		{
+			int score = 0;
+			foreach (int s in GetBoard())
+			{
+				score += s;
+			}
+			return score;
+		}
+		public bool GameWin()
+		{
+			bool isgamewin = false;
+			foreach (int i in GetBoard())
+			{
+				if (i == 2048)
+				{
+					isgamewin = true;
+				}
+			}
+			return isgamewin;
+		}
+		public bool GameFull()
+		{
+			bool isGameOver = false;
+			int count = 0;
+			int tmp_count = 0;
+			foreach (int i in range)
+			{
+				int[] buffer = new int[boardSize];
+				foreach (int j in range)
+				{
+					buffer[j] = board[i, j];
+				}
+				if (!ShiftAndMerge(buffer))
+				{
+					tmp_count++;
+				}
+				if (tmp_count == 4)
+				{
+					count++;
+				}
+			}
+			tmp_count = 0;
+			
+			foreach (int i in range)
+			{
+				int[] buffer = new int[boardSize];
+				foreach (int j in range)
+				{
+					buffer[boardSize - j - 1] = board[i, j];
+				}
+				if (!ShiftAndMerge(buffer))
+				{
+					tmp_count++;
+				}
+				if (tmp_count == 4)
+				{
+					count++;
+				}
+			}
+			tmp_count = 0;
+			
+			foreach (int i in range)
+			{
+				int[] buffer = new int[boardSize];
+				foreach (int j in range)
+				{
+					buffer[j] = board[i, j];
+				}
+				if (!ShiftAndMerge(buffer))
+				{
+					tmp_count++;
+				}
+				if (tmp_count == 4)
+				{
+					count++;
+				}
+			}
+			
+			tmp_count = 0;
+			foreach (int i in range)
+			{
+				int[] buffer = new int[boardSize];
+				foreach (int j in range)
+				{
+					buffer[boardSize - j - 1] = board[i, j];
+				}
+				if (!ShiftAndMerge(buffer))
+				{
+					tmp_count++;
+				}
+				if (tmp_count == 4)
+				{
+					count++;
+				}
+			}
+			if (count == 4)
+			{
+				isGameOver = true;
+			}
+			return isGameOver;
+		}
+	}
 }
